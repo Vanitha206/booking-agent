@@ -100,3 +100,14 @@ def test_reminders_sent_once_and_not_for_cancelled(store, clock):
     sent = store.send_due_reminders()
     assert [m.booking_id for m in sent] == [kept.id, kept.id]  # 24 h and 2 h reminders both due
     assert store.send_due_reminders() == []
+
+
+def test_sample_data_loads_and_blocks_its_slots():
+    from booking_agent.sample_data import sample_store
+
+    friday = datetime(2026, 10, 30, 7, 0)
+    store = sample_store(lambda: friday)
+    assert len(store.bookings) == 7 and store.outbox == []
+    # Ms. Rao's 9:00 on Monday is taken by a sample booking.
+    with pytest.raises(BookingError, match="just taken"):
+        book(store, datetime(2026, 11, 2, 9, 0))

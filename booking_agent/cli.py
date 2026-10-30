@@ -10,14 +10,14 @@ import sys
 from datetime import datetime, timedelta
 
 from .agent import BookingAgent
-from .store import BookingStore
+from .sample_data import SCHOOL_NAME, sample_store
 
 
 def main() -> None:
     now = [datetime.now().replace(second=0, microsecond=0)]
-    store = BookingStore(clock=lambda: now[0])
+    store = sample_store(lambda: now[0])
     contact = sys.argv[1] if len(sys.argv) > 1 else "+15550100"
-    agent = BookingAgent(store, parent_contact=contact, school="Greenfield School")
+    agent = BookingAgent(store, parent_contact=contact, school=SCHOOL_NAME)
     print(f"Chatting as parent {contact}. Type /quit to exit.")
     while True:
         try:

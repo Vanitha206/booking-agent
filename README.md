@@ -14,6 +14,7 @@ anywhere. Real calendar and SMS/email/WhatsApp connections come in later phases.
   only see or change their own bookings.
 - `booking_agent/tools.py` defines the tools the model can call. The parent's phone or email comes
   from the channel the message arrived on, never from the model.
+- `booking_agent/sample_data.py` has sample staff, meeting types and existing bookings for testing.
 - `booking_agent/agent.py` runs the Claude tool-use loop for each parent message. Rule violations
   come back to the model as tool errors, and refusals or runaway loops hand off to the school office.
 
